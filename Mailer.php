@@ -1,6 +1,6 @@
 <?php
 
-namespace katanyoo\mailgunmailer;
+namespace yamaha252\mailgunmailer;
 
 use Yii;
 use yii\base\InvalidConfigException;
@@ -16,7 +16,7 @@ use Mailgun\Mailgun;
  * 'components' => [
  *     ...
  *     'mailer' => [
- *         'class' => 'katanyoo\mailer\Mailer',
+ *         'class' => 'yamaha252\mailer\Mailer',
  *         'domain' => 'example.com',
  *         'key' => 'key-somekey',
  *         'tags' => ['yii'],
@@ -33,7 +33,7 @@ class Mailer extends BaseMailer
 	 * [$messageClass description]
 	 * @var string message default class name.
 	 */
-	public $messageClass = 'katanyoo\mailgunmailer\Message';
+	public $messageClass = 'yamaha252\mailgunmailer\Message';
 
 	public $domain;
 	public $key;

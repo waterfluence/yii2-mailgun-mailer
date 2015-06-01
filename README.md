@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist katanyoo/yii2-mailgun-mailer "*"
+php composer.phar require --prefer-dist yamaha252/yii2-mailgun-mailer "*"
 ```
 
 or add
 
 ```
-"katanyoo/yii2-mailgun-mailer": "*"
+"yamaha252/yii2-mailgun-mailer": "*"
 ```
 
 to the require section of your `composer.json` file.

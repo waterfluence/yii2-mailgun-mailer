@@ -1,11 +1,9 @@
 <?php
 
-namespace katanyoo\mailgunmailer;
+namespace yamaha252\mailgunmailer;
 
 use yii\mail\BaseMessage;
 use Mailgun\Messages\MessageBuilder;
-
-require_once __DIR__.'/../../mailgun/mailgun-php/src/Mailgun/Constants/Constants.php';
 
 /**
  * Message implements a message class based on Mailgun.
