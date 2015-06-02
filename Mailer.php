@@ -3,7 +3,6 @@
 namespace yamaha252\mailgunmailer;
 
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\mail\BaseMailer;
 
 use Mailgun\Mailgun;
@@ -16,7 +15,7 @@ use Mailgun\Mailgun;
  * 'components' => [
  *     ...
  *     'mailer' => [
- *         'class' => 'yamaha252\mailer\Mailer',
+ *         'class' => 'yamaha252\mailgunmailer\Mailer',
  *         'domain' => 'example.com',
  *         'key' => 'key-somekey',
  *         'tags' => ['yii'],
@@ -67,9 +66,6 @@ class Mailer extends BaseMailer
      */
     protected function sendMessage($message)
     {
-        $mailer = $this->getMailgunMailer();
-
-
         $message->setClickTracking($this->clicksTrackingMode)
             ->addTags($this->tags);
 
@@ -91,7 +87,6 @@ class Mailer extends BaseMailer
      */
     protected function createMailgunMailer()
     {
-        $mg = new Mailgun($this->key);
-        return $mg;
+        return new Mailgun($this->key);
     }
 }

@@ -7,33 +7,16 @@ use Mailgun\Messages\MessageBuilder;
 
 /**
  * Message implements a message class based on Mailgun.
- *
- *
- * @method Mailer getMailer() returns mailer instance.
- *
- *
- * @author Katanyoo Ubalee <ublee.k@gmail.com>
  */
 class Message extends BaseMessage
 {
-
-    /*	protected $bcc;
-        protected $cc;
-        protected $charset;
-        protected $from;
-        protected $htmlBody;
-        protected $replyTo;
-        protected $subject;
-        protected $textBody;
-        protected $to;*/
-
     /**
-     * @var \Mailgun\Messages\MessageBuilder Mailgun message instance.
+     * @var MessageBuilder Mailgun message instance.
      */
     private $_messageBuilder;
 
     /**
-     * @return \Swift_Message Swift message instance.
+     * @return MessageBuilder email message instance.
      */
     public function getMessageBuilder()
     {
@@ -242,7 +225,8 @@ class Message extends BaseMessage
 
     /**
      * Set click tracking
-     * @param Boolean|String $enabled true, false, "html"
+     * @param boolean|string $enabled true, false, "html"
+     * @return $this
      */
     public function setClickTracking($enabled)
     {
@@ -268,7 +252,7 @@ class Message extends BaseMessage
 
     /**
      * Creates the Mailgun email message instance.
-     * @return \MessageBldr email message instance.
+     * @return MessageBuilder email message instance.
      */
     protected function createMessageBuilder()
     {
