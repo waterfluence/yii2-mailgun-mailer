@@ -244,7 +244,7 @@ class Message extends BaseMessage
     public function setTags($tags)
     {
         foreach ($tags as $tag) {
-            $this->getMessageBuilder()->addTag($tag);
+            $this->_tags = $this->getMessageBuilder()->addTag($tag);
         }
         return $this;
     }
@@ -264,7 +264,7 @@ class Message extends BaseMessage
      */
     public function setClickTracking($mode)
     {
-        $this->getMessageBuilder()->setClickTracking($mode);
+        $this->_clickTracking = $this->getMessageBuilder()->setClickTracking($mode);
         return $this;
     }
 
@@ -282,7 +282,7 @@ class Message extends BaseMessage
      */
     public function setOpensTracking($enabled)
     {
-        $this->getMessageBuilder()->setOpenTracking($enabled);
+        $this->_opensTracking = $this->getMessageBuilder()->setOpenTracking($enabled);
         return $this;
     }
 
@@ -301,7 +301,7 @@ class Message extends BaseMessage
      */
     public function setCampaignId($id)
     {
-        $this->getMessageBuilder()->addCampaignId($id);
+        $this->_campaignId = $this->getMessageBuilder()->addCampaignId($id);
         return $this;
     }
 
@@ -319,7 +319,7 @@ class Message extends BaseMessage
      */
     public function setDkim($enabled)
     {
-        $this->getMessageBuilder()->setDkim($enabled);
+        $this->_dkim = $this->getMessageBuilder()->setDkim($enabled);
         return $this;
     }
 
@@ -337,7 +337,7 @@ class Message extends BaseMessage
      */
     public function setTestMode($enabled)
     {
-        $this->getMessageBuilder()->setTestMode($enabled);
+        $this->_testMode = $this->getMessageBuilder()->setTestMode($enabled);
         return $this;
     }
 
