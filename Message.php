@@ -49,7 +49,7 @@ class Message extends BaseMessage
      */
     public function getCharset()
     {
-        return 'utf-8';
+        throw new NotSupportedException('charset for messages is not supported');
     }
 
     /**
@@ -57,7 +57,7 @@ class Message extends BaseMessage
      */
     public function setCharset($charset)
     {
-        return $this;
+        throw new NotSupportedException('charset for messages is not supported');
     }
 
     /**
