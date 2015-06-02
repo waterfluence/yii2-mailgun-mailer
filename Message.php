@@ -233,7 +233,7 @@ class Message extends BaseMessage
      */
     public function toString()
     {
-        return "mailgun_tostring()_method";
+        return print_r($this->message, true);
     }
 
     /**
