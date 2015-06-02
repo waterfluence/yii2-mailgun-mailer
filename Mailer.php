@@ -2,10 +2,11 @@
 
 namespace yamaha252\mailgunmailer;
 
+use Mailgun\Connection\Exceptions\MissingRequiredParameters;
 use Yii;
 use yii\mail\BaseMailer;
-
 use Mailgun\Mailgun;
+
 /**
  * Mailer implements a mailer based on Mailgun.
  *
@@ -36,16 +37,14 @@ class Mailer extends BaseMailer
 
     public $domain;
     public $key;
+    public $from;
 
-    public $fromAddress;
-    public $fromName;
     public $tags = [];
     public $campaignId;
-    public $enableDkim;
-    public $enableTestMode;
-    public $enableTracking;
-    public $clicksTrackingMode; // true, false, "html"
-    public $enableOpensTracking;
+    public $dkim;
+    public $testMode;
+    public $clickTracking;
+    public $opensTracking;
 
     private $_mailgunMailer;
 
@@ -62,12 +61,37 @@ class Mailer extends BaseMailer
     }
 
     /**
-     * @inheritdoc
+     * @param \yamaha252\mailgunmailer\Message $message
+     * @return bool
+     * @throws MissingRequiredParameters
      */
     protected function sendMessage($message)
     {
-        $message->setClickTracking($this->clicksTrackingMode)
-            ->addTags($this->tags);
+        if (!$this->domain) {
+            throw new MissingRequiredParameters('Domain property is required');
+        }
+
+        if ($this->from && $message->from === null) {
+            $message->from = $this->from;
+        }
+        if ($this->tags && $message->tags === null) {
+            $message->tags = $this->tags;
+        }
+        if ($this->campaignId !== null && $message->campaignId === null) {
+            $message->campaignId = $this->campaignId;
+        }
+        if ($this->dkim !== null && $message->dkim === null) {
+            $message->dkim = $this->dkim;
+        }
+        if ($this->testMode !== null && $message->testMode === null) {
+            $message->testMode = $this->testMode;
+        }
+        if ($this->clickTracking !== null && $message->clickTracking === null) {
+            $message->clickTracking = $this->clickTracking;
+        }
+        if ($this->opensTracking !== null && $message->opensTracking === null) {
+            $message->opensTracking = $this->opensTracking;
+        }
 
         Yii::info('Sending email', __METHOD__);
         $response = $this->getMailgunMailer()->post(
@@ -84,9 +108,14 @@ class Mailer extends BaseMailer
     /**
      * Creates Mailgun mailer instance.
      * @return Mailgun mailer instance.
+     * @throws MissingRequiredParameters
      */
     protected function createMailgunMailer()
     {
+        if (!$this->key) {
+            throw new MissingRequiredParameters('API key property is required');
+        }
+
         return new Mailgun($this->key);
     }
 }

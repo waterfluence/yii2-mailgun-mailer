@@ -2,11 +2,21 @@
 
 namespace yamaha252\mailgunmailer;
 
+use yii\base\NotSupportedException;
 use yii\mail\BaseMessage;
 use Mailgun\Messages\MessageBuilder;
 
 /**
  * Message implements a message class based on Mailgun.
+ *
+ * @property string $from
+ * @property array $message
+ * @property array $tags
+ * @property boolean|string $clickTracking
+ * @property boolean $opensTracking
+ * @property integer|string $campaignId
+ * @property boolean $dkim
+ * @property boolean $testMode
  */
 class Message extends BaseMessage
 {
@@ -14,6 +24,13 @@ class Message extends BaseMessage
      * @var MessageBuilder Mailgun message instance.
      */
     private $_messageBuilder;
+
+    private $_tags;
+    private $_clickTracking;
+    private $_opensTracking;
+    private $_campaignId;
+    private $_dkim;
+    private $_testMode;
 
     /**
      * @return MessageBuilder email message instance.
@@ -48,7 +65,7 @@ class Message extends BaseMessage
      */
     public function getFrom()
     {
-        return null;
+        return isset($this->message['from']) ? $this->message['from'] : null;
     }
 
     /**
@@ -66,7 +83,7 @@ class Message extends BaseMessage
      */
     public function getReplyTo()
     {
-        return null;
+        return isset($this->message['h:reply-to']) ? $this->message['h:reply-to'] : null;
     }
 
     /**
@@ -84,7 +101,7 @@ class Message extends BaseMessage
      */
     public function getTo()
     {
-        return null;
+        return isset($this->message['to']) ? $this->message['to'] : null;
     }
 
     /**
@@ -102,7 +119,7 @@ class Message extends BaseMessage
      */
     public function getCc()
     {
-        return null;
+        return isset($this->message['cc']) ? $this->message['cc'] : null;
     }
 
     /**
@@ -120,7 +137,7 @@ class Message extends BaseMessage
      */
     public function getBcc()
     {
-        return null;
+        return isset($this->message['bcc']) ? $this->message['bcc'] : null;
     }
 
     /**
@@ -138,7 +155,7 @@ class Message extends BaseMessage
      */
     public function getSubject()
     {
-        return null;
+        return isset($this->message['subject']) ? $this->message['subject'] : null;
     }
 
     /**
@@ -176,7 +193,10 @@ class Message extends BaseMessage
      */
     public function attach($fileName, array $options = [])
     {
-        $this->getMessageBuilder()->addAttachment($fileName);
+        $this->getMessageBuilder()->addAttachment(
+            $fileName,
+            (isset($options['fileName']) ? $options['fileName'] : null)
+        );
         return $this;
     }
 
@@ -185,8 +205,7 @@ class Message extends BaseMessage
      */
     public function attachContent($content, array $options = [])
     {
-        $this->getMessageBuilder()->addAttachment($content);
-        return $this;
+        throw new NotSupportedException('attach content is not supported');
     }
 
     /**
@@ -194,7 +213,10 @@ class Message extends BaseMessage
      */
     public function embed($fileName, array $options = [])
     {
-        //$this->getMessageBuilder()->addAttachment($fileName);
+        $this->getMessageBuilder()->addInlineImage(
+            $fileName,
+            (isset($options['fileName']) ? $options['fileName'] : null)
+        );
         return null;
     }
 
@@ -203,8 +225,7 @@ class Message extends BaseMessage
      */
     public function embedContent($content, array $options = [])
     {
-        //$this->getMessageBuilder()->addAttachment($fileName);
-        return null;
+        throw new NotSupportedException('embed content is not supported');
     }
 
     /**
@@ -215,7 +236,12 @@ class Message extends BaseMessage
         return "mailgun_tostring()_method";
     }
 
-    public function addTags($tags)
+    /**
+     * @param array $tags
+     * @return $this
+     * @throws \Mailgun\Messages\Exceptions\TooManyParameters
+     */
+    public function setTags($tags)
     {
         foreach ($tags as $tag) {
             $this->getMessageBuilder()->addTag($tag);
@@ -224,14 +250,103 @@ class Message extends BaseMessage
     }
 
     /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->_tags;
+    }
+
+    /**
      * Set click tracking
-     * @param boolean|string $enabled true, false, "html"
+     * @param boolean|string $mode true, false, "html"
      * @return $this
      */
-    public function setClickTracking($enabled)
+    public function setClickTracking($mode)
     {
-        $this->getMessageBuilder()->setClickTracking($enabled);
+        $this->getMessageBuilder()->setClickTracking($mode);
         return $this;
+    }
+
+    /**
+     * @return boolean|string
+     */
+    public function getClickTracking()
+    {
+        return $this->_clickTracking;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return $this
+     */
+    public function setOpensTracking($enabled)
+    {
+        $this->getMessageBuilder()->setOpenTracking($enabled);
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getOpensTracking()
+    {
+        return $this->_opensTracking;
+    }
+
+    /**
+     * @param string|int $id
+     * @return $this
+     * @throws \Mailgun\Messages\Exceptions\TooManyParameters
+     */
+    public function setCampaignId($id)
+    {
+        $this->getMessageBuilder()->addCampaignId($id);
+        return $this;
+    }
+
+    /**
+     * @return string|int
+     */
+    public function getCampaignId()
+    {
+        return $this->_campaignId;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return $this
+     */
+    public function setDkim($enabled)
+    {
+        $this->getMessageBuilder()->setDkim($enabled);
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDkim()
+    {
+        return $this->_dkim;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return $this
+     */
+    public function setTestMode($enabled)
+    {
+        $this->getMessageBuilder()->setTestMode($enabled);
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getTestMode()
+    {
+        return $this->_testMode;
     }
 
     /**
