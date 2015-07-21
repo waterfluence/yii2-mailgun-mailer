@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "yamaha252\\mailgunmailer\\": "",
+            "e96\\mailgunmailer\\": "",
             "Mailgun\\": ""
         }
     }

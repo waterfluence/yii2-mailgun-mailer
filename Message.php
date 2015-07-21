@@ -1,6 +1,6 @@
 <?php
 
-namespace yamaha252\mailgunmailer;
+namespace e96\mailgunmailer;
 
 use yii\base\NotSupportedException;
 use yii\mail\BaseMessage;

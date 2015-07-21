@@ -1,6 +1,6 @@
 <?php
 
-namespace yamaha252\mailgunmailer;
+namespace e96\mailgunmailer;
 
 use Mailgun\Connection\Exceptions\MissingRequiredParameters;
 use Yii;
@@ -16,7 +16,7 @@ use Mailgun\Mailgun;
  * 'components' => [
  *     ...
  *     'mailer' => [
- *         'class' => 'yamaha252\mailgunmailer\Mailer',
+ *         'class' => 'e96\mailgunmailer\Mailer',
  *         'domain' => 'example.com',
  *         'key' => 'key-somekey',
  *         'tags' => ['yii'],
@@ -33,7 +33,7 @@ class Mailer extends BaseMailer
      * [$messageClass description]
      * @var string message default class name.
      */
-    public $messageClass = 'yamaha252\mailgunmailer\Message';
+    public $messageClass = 'e96\mailgunmailer\Message';
 
     public $domain;
     public $key;
@@ -61,7 +61,7 @@ class Mailer extends BaseMailer
     }
 
     /**
-     * @param \yamaha252\mailgunmailer\Message $message
+     * @param \e96\mailgunmailer\Message $message
      * @return bool
      * @throws MissingRequiredParameters
      */
