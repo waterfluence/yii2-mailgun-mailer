@@ -33,7 +33,8 @@ First, update your mailer config like so:
   'domain' => 'domain.com',
   'key' => 'api-key',
   'tags' => ['yii'],
-  'enableTracking' => false, //or true
+  'clickTracking' => false,
+  'opensTracking' => false
 ],
 ```
 

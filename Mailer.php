@@ -20,7 +20,8 @@ use Mailgun\Mailgun;
  *         'domain' => 'example.com',
  *         'key' => 'key-somekey',
  *         'tags' => ['yii'],
- *         'enableTracking' => false,
+ *         'clickTracking' => false,
+ *         'opensTracking' => false
  *     ],
  *     ...
  * ],
