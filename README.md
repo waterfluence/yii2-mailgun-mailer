@@ -25,7 +25,19 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
+First, update your mailer config like so:
+
+```php
+'mailer' => [
+  'class' => 'e96\mailgunmailer\Mailer',
+  'domain' => 'domain.com',
+  'key' => 'api-key',
+  'tags' => ['yii'],
+  'enableTracking' => false, //or true
+],
+```
+
+Yii's mailer will now use the Mailgun configuration, so send mail like normal:
 
 ```php
 <?php
