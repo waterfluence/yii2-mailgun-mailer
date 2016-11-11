@@ -73,7 +73,13 @@ class Message extends BaseMessage
      */
     public function setFrom($from)
     {
-        $this->getMessageBuilder()->setFromAddress($from);
+        // if we're passing in [email => name] as discussed in \yii\mail\MessageInterface 
+        // then send that on into the Mailgun system properly
+        if (is_array( $from )) {
+            $this->getMessageBuilder()->setFromAddress( key( $from ), [ 'full_name' => current( $from ) ] );
+        } else {
+            $this->getMessageBuilder()->setFromAddress( $from );
+        }
 
         return $this;
     }
