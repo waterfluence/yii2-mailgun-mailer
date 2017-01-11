@@ -356,7 +356,7 @@ class Message extends BaseMessage
     }
 
     /**
-     * @return Array message object
+     * @return array message object
      */
     public function getMessage()
     {
@@ -364,7 +364,7 @@ class Message extends BaseMessage
     }
 
     /**
-     * @return Array files list
+     * @return array files list
      */
     public function getFiles()
     {
