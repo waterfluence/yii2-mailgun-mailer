@@ -94,14 +94,19 @@ class Mailer extends BaseMailer
             $message->opensTracking = $this->opensTracking;
         }
 
-        Yii::info('Sending email', __METHOD__);
-        $response = $this->getMailgunMailer()->post(
-            "{$this->domain}/messages",
-            $message->getMessage(),
-            $message->getFiles()
-        );
+        try {
+            Yii::info('Sending email', __METHOD__);
+            $response = $this->getMailgunMailer()->post(
+                "{$this->domain}/messages",
+                $message->getMessage(),
+                $message->getFiles()
+            );
 
-        Yii::info('Response : '.print_r($response, true), __METHOD__);
+            Yii::info('Response : '.print_r($response, true), __METHOD__);
+        } catch(\Exception $e) {
+            Yii::error('Mailgun error:' . $e->getMessage(), __METHOD__);
+            return false;
+        }
 
         return true;
     }
