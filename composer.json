@@ -16,7 +16,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "mailgun/mailgun-php": "~2.1"
+        "mailgun/mailgun-php": "~3"
     },
     "autoload": {
         "psr-4": {
